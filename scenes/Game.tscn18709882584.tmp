@@ -1,0 +1,513 @@
+[gd_scene load_steps=11 format=3 uid="uid://hxpidml502v5"]
+
+[ext_resource type="Script" uid="uid://6sdbss5asc2s" path="res://script/data/game_object.gd" id="1_ibkli"]
+[ext_resource type="Texture2D" uid="uid://p3gcft1kixdt" path="res://assets/pickaxe.png" id="3_cpr0p"]
+[ext_resource type="Texture2D" uid="uid://2wiun10dl2q3" path="res://assets/under_texture.png" id="4_s0nni"]
+[ext_resource type="Texture2D" uid="uid://dv0ds6n30caha" path="res://assets/over_texture.png" id="5_aug50"]
+[ext_resource type="Script" uid="uid://bivecnqr48wrh" path="res://script/auto_progress_bar_management.gd" id="6_400sg"]
+[ext_resource type="Texture2D" uid="uid://xqdc00amvguy" path="res://assets/under_texture_big.png" id="6_kiw3p"]
+[ext_resource type="Texture2D" uid="uid://nbexl3h3mi3s" path="res://assets/over_texture_big.png" id="7_400sg"]
+[ext_resource type="Texture2D" uid="uid://dyugw4dlhtix5" path="res://assets/crown.png" id="8_400sg"]
+
+[sub_resource type="GDScript" id="GDScript_s0nni"]
+
+[sub_resource type="GDScript" id="GDScript_kiw3p"]
+
+[node name="Game" type="Node2D"]
+metadata/_edit_horizontal_guides_ = [-201.0]
+
+[node name="GameObject" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_ibkli")
+
+[node name="BankContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+script = SubResource("GDScript_s0nni")
+
+[node name="BankGainLabel" type="RichTextLabel" parent="BankContainer"]
+unique_name_in_owner = true
+z_index = 4
+layout_mode = 0
+offset_left = 1.0
+offset_top = 16.0
+offset_right = 1154.0
+offset_bottom = 108.0
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[wave amp=50 freq=15]Click the pickaxe to start![/wave]"
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_kiw3p")
+
+[node name="Bank" type="Label" parent="BankContainer"]
+unique_name_in_owner = true
+z_index = 4
+layout_mode = 0
+offset_left = 3.0
+offset_top = 96.0
+offset_right = 1150.0
+offset_bottom = 194.0
+theme_override_colors/font_color = Color(0.819613, 0.845612, 1.15514e-06, 1)
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_right = 1153.0
+offset_bottom = 648.0
+
+[node name="LeftContainer" type="Control" parent="GameContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_right = 576.0
+offset_bottom = 648.0
+
+[node name="FarmContainer" type="Control" parent="GameContainer/LeftContainer"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 486.0
+offset_bottom = 219.0
+
+[node name="ClickIncrementContainer" type="Control" parent="GameContainer/LeftContainer/FarmContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 23.0
+offset_top = 25.0
+offset_right = 135.0
+offset_bottom = 83.0
+
+[node name="IncrementPrice" type="Label" parent="GameContainer/LeftContainer/FarmContainer/ClickIncrementContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 123.0
+offset_bottom = 26.0
+horizontal_alignment = 1
+
+[node name="BuyIncrementButton" type="Button" parent="GameContainer/LeftContainer/FarmContainer/ClickIncrementContainer"]
+layout_mode = 2
+offset_top = 34.0
+offset_right = 112.0
+offset_bottom = 66.0
+text = "+1 click"
+
+[node name="ClickMultiplyContainer" type="Control" parent="GameContainer/LeftContainer/FarmContainer"]
+visible = false
+anchors_preset = 0
+offset_left = 160.0
+offset_top = 25.0
+offset_right = 272.0
+offset_bottom = 83.0
+
+[node name="MultiplyPrice" type="Label" parent="GameContainer/LeftContainer/FarmContainer/ClickMultiplyContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 126.0
+offset_bottom = 26.0
+horizontal_alignment = 1
+
+[node name="BuyMultiplyButton" type="Button" parent="GameContainer/LeftContainer/FarmContainer/ClickMultiplyContainer"]
+layout_mode = 2
+offset_top = 34.0
+offset_right = 112.0
+offset_bottom = 66.0
+text = "*2 click"
+
+[node name="FarmButton" type="Button" parent="GameContainer/LeftContainer/FarmContainer"]
+layout_mode = 2
+offset_left = 76.0
+offset_top = 138.0
+offset_right = 220.0
+offset_bottom = 210.0
+
+[node name="Sprite2D" type="Sprite2D" parent="GameContainer/LeftContainer/FarmContainer/FarmButton"]
+position = Vector2(71, 34)
+scale = Vector2(0.106445, 0.106445)
+texture = ExtResource("3_cpr0p")
+
+[node name="FarmProgressContainer" type="Control" parent="GameContainer/LeftContainer/FarmContainer"]
+visible = false
+anchors_preset = 0
+offset_left = 287.0
+offset_top = 107.0
+offset_right = 487.0
+offset_bottom = 241.0
+
+[node name="FarmProgressButton" type="Button" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 30.0
+offset_right = 134.0
+offset_bottom = 102.0
+
+[node name="Sprite2D" type="Sprite2D" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressButton"]
+position = Vector2(71, 34)
+scale = Vector2(0.106445, 0.106445)
+texture = ExtResource("3_cpr0p")
+
+[node name="FarmProgressBar" type="TextureProgressBar" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 13.0
+offset_right = 157.0
+offset_bottom = 118.0
+fill_mode = 2
+texture_under = ExtResource("4_s0nni")
+texture_progress = ExtResource("5_aug50")
+
+[node name="FarmProgressTimer" type="Timer" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer"]
+
+[node name="FarmProgressContainer2" type="Control" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer"]
+visible = false
+z_index = 2
+anchors_preset = 0
+offset_left = 477.0
+offset_top = 11.0
+offset_right = 653.0
+offset_bottom = 120.0
+
+[node name="FarmProgressButton2" type="Button" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2"]
+z_index = 3
+layout_mode = 0
+offset_left = -18.0
+offset_top = 19.0
+offset_right = 126.0
+offset_bottom = 91.0
+
+[node name="Sprite2D" type="Sprite2D" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2/FarmProgressButton2"]
+position = Vector2(71, 34)
+scale = Vector2(0.106445, 0.106445)
+texture = ExtResource("3_cpr0p")
+
+[node name="FarmProgressBar2" type="TextureProgressBar" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2"]
+layout_mode = 0
+offset_left = -43.0
+offset_top = 2.0
+offset_right = -28.0
+offset_bottom = 107.0
+fill_mode = 2
+texture_under = ExtResource("4_s0nni")
+texture_progress = ExtResource("5_aug50")
+
+[node name="FarmProgressTimer2" type="Timer" parent="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2"]
+
+[node name="ShopContainer" type="Control" parent="GameContainer/LeftContainer"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = -16.0
+offset_top = 216.0
+offset_right = 915.0
+offset_bottom = 492.0
+
+[node name="ClickUpgradeButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 44.0
+offset_top = 57.0
+offset_right = 259.0
+offset_bottom = 115.0
+
+[node name="ClickUpgradeButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/ClickUpgradeButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+horizontal_alignment = 1
+
+[node name="clickUpgradeButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/ClickUpgradeButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "multiply"
+
+[node name="ClickProgressButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 251.0
+offset_top = 57.0
+offset_right = 466.0
+offset_bottom = 115.0
+
+[node name="ClickProgressButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+horizontal_alignment = 1
+
+[node name="ClickProgressButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "progress button
+"
+
+[node name="AutoProgressBarButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 723.0
+offset_top = 30.0
+offset_right = 938.0
+offset_bottom = 88.0
+
+[node name="AutoProgressBarButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+text = "costs 1"
+horizontal_alignment = 1
+
+[node name="AutoProgressBarButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "auto progress bar"
+
+[node name="AutoProgressBarSpeedButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 723.0
+offset_top = 115.0
+offset_right = 938.0
+offset_bottom = 173.0
+
+[node name="AutoProgressBarSpeedButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarSpeedButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+text = "costs 1"
+horizontal_alignment = 1
+
+[node name="AutoProgressBarSpeedButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarSpeedButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "auto progress speed"
+
+[node name="AutoProgressBarMultiButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 723.0
+offset_top = 196.0
+offset_right = 938.0
+offset_bottom = 254.0
+
+[node name="AutoProgressBarMultiButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarMultiButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+text = "costs 1"
+horizontal_alignment = 1
+
+[node name="AutoProgressBarMultiButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/AutoProgressBarMultiButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "auto progress multi"
+
+[node name="ClickProgressBarButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 44.0
+offset_top = 166.0
+offset_right = 259.0
+offset_bottom = 224.0
+
+[node name="ClickProgressBarButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressBarButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+horizontal_alignment = 1
+
+[node name="ClickProgressBarButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressBarButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "increment bar"
+
+[node name="ClickProgressBarMultiButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 251.0
+offset_top = 166.0
+offset_right = 466.0
+offset_bottom = 224.0
+
+[node name="ClickProgressBarMultiButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressBarMultiButtonContainer"]
+layout_mode = 2
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 226.0
+offset_bottom = 26.0
+text = "costs 1"
+horizontal_alignment = 1
+
+[node name="ClickProgressBarMultiButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/ClickProgressBarMultiButtonContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 26.0
+offset_right = 191.0
+offset_bottom = 58.0
+text = "increment bar *5"
+
+[node name="WinButtonContainer" type="Control" parent="GameContainer/LeftContainer/ShopContainer"]
+anchors_preset = 0
+offset_left = 494.0
+offset_top = 70.0
+offset_right = 687.0
+offset_bottom = 235.0
+
+[node name="WinButton" type="Button" parent="GameContainer/LeftContainer/ShopContainer/WinButtonContainer"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 34.0
+offset_right = 180.0
+offset_bottom = 131.0
+
+[node name="WinButtonTag" type="Label" parent="GameContainer/LeftContainer/ShopContainer/WinButtonContainer"]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 7.0
+offset_right = 206.0
+offset_bottom = 34.0
+text = "costs x"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="GameContainer/LeftContainer/ShopContainer/WinButtonContainer"]
+position = Vector2(96.75, 80.75)
+scale = Vector2(0.141601, 0.141601)
+texture = ExtResource("8_400sg")
+
+[node name="ProgressBarContainer" type="VBoxContainer" parent="GameContainer/LeftContainer"]
+layout_mode = 1
+offset_left = -1.0
+offset_top = 497.0
+offset_right = 931.0
+offset_bottom = 648.0
+alignment = 2
+
+[node name="ProgressBar0_01" type="ProgressBar" parent="GameContainer/LeftContainer/ProgressBarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProgressBar0_1" type="ProgressBar" parent="GameContainer/LeftContainer/ProgressBarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProgressBar1" type="ProgressBar" parent="GameContainer/LeftContainer/ProgressBarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProgressBar10" type="ProgressBar" parent="GameContainer/LeftContainer/ProgressBarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProgressBar25" type="ProgressBar" parent="GameContainer/LeftContainer/ProgressBarContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RightContainer" type="Control" parent="GameContainer"]
+z_index = -1
+layout_mode = 2
+anchors_preset = 0
+offset_left = 928.0
+offset_right = 1149.0
+offset_bottom = 648.0
+
+[node name="AutoProgressBarContainer" type="HBoxContainer" parent="GameContainer/RightContainer"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 224.0
+offset_bottom = 649.0
+alignment = 2
+script = ExtResource("6_400sg")
+
+[node name="AutoProgressBar5" type="TextureProgressBar" parent="GameContainer/RightContainer/AutoProgressBarContainer"]
+visible = false
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("6_kiw3p")
+texture_progress = ExtResource("7_400sg")
+
+[node name="AutoProgressBar4" type="TextureProgressBar" parent="GameContainer/RightContainer/AutoProgressBarContainer"]
+visible = false
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("6_kiw3p")
+texture_progress = ExtResource("7_400sg")
+
+[node name="AutoProgressBar3" type="TextureProgressBar" parent="GameContainer/RightContainer/AutoProgressBarContainer"]
+visible = false
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("6_kiw3p")
+texture_progress = ExtResource("7_400sg")
+
+[node name="AutoProgressBar2" type="TextureProgressBar" parent="GameContainer/RightContainer/AutoProgressBarContainer"]
+visible = false
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("6_kiw3p")
+texture_progress = ExtResource("7_400sg")
+
+[node name="AutoProgressBar" type="TextureProgressBar" parent="GameContainer/RightContainer/AutoProgressBarContainer"]
+visible = false
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("6_kiw3p")
+texture_progress = ExtResource("7_400sg")
+
+[connection signal="button_down" from="GameContainer/LeftContainer/FarmContainer/ClickIncrementContainer/BuyIncrementButton" to="GameObject" method="_on_button_2_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/FarmContainer/ClickMultiplyContainer/BuyMultiplyButton" to="GameObject" method="_on_buy_multiply_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/FarmContainer/FarmButton" to="GameObject" method="_on_farm_button_down"]
+[connection signal="button_up" from="GameContainer/LeftContainer/FarmContainer/FarmButton" to="GameObject" method="_on_farm_button_up"]
+[connection signal="button_down" from="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressButton" to="GameObject" method="_on_farm_progress_button_down"]
+[connection signal="timeout" from="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressTimer" to="GameObject" method="_on_farm_progress_timer_timeout"]
+[connection signal="button_down" from="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2/FarmProgressButton2" to="GameObject" method="_on_farm_progress_button_2_down"]
+[connection signal="timeout" from="GameContainer/LeftContainer/FarmContainer/FarmProgressContainer/FarmProgressContainer2/FarmProgressTimer2" to="GameObject" method="_on_farm_progress_timer_2_timeout"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/ClickUpgradeButtonContainer/clickUpgradeButton" to="GameObject" method="_on_click_upgrade_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/ClickProgressButtonContainer/ClickProgressButton" to="GameObject" method="_on_click_progress_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/AutoProgressBarButtonContainer/AutoProgressBarButton" to="GameObject" method="_on_buy_auto_progress_bar_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/AutoProgressBarSpeedButtonContainer/AutoProgressBarSpeedButton" to="GameObject" method="_on_buy_auto_progress_bar_speed_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/ClickProgressBarButtonContainer/ClickProgressBarButton" to="GameObject" method="_on_buy_click_progress_bar_button_down"]
+[connection signal="button_down" from="GameContainer/LeftContainer/ShopContainer/ClickProgressBarMultiButtonContainer/ClickProgressBarMultiButton" to="GameObject" method="_on_buy_click_progress_bar_multi_button_down"]
+[connection signal="value_changed" from="GameContainer/RightContainer/AutoProgressBarContainer/AutoProgressBar5" to="GameObject" method="_on_auto_progress_bar_5_value_changed"]
+[connection signal="value_changed" from="GameContainer/RightContainer/AutoProgressBarContainer/AutoProgressBar4" to="GameObject" method="_on_auto_progress_bar_4_value_changed"]
+[connection signal="value_changed" from="GameContainer/RightContainer/AutoProgressBarContainer/AutoProgressBar3" to="GameObject" method="_on_auto_progress_bar_3_value_changed"]
+[connection signal="value_changed" from="GameContainer/RightContainer/AutoProgressBarContainer/AutoProgressBar2" to="GameObject" method="_on_auto_progress_bar_2_value_changed"]
+[connection signal="value_changed" from="GameContainer/RightContainer/AutoProgressBarContainer/AutoProgressBar" to="GameObject" method="_on_auto_progress_bar_value_changed"]

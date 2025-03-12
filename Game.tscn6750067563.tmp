@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://hxpidml502v5"]
+
+[ext_resource type="Script" uid="uid://6sdbss5asc2s" path="res://game_object.gd" id="1_xkndl"]
+
+[node name="Game" type="Node2D"]
+
+[node name="GameObject" type="Node" parent="."]
+script = ExtResource("1_xkndl")
+
+[node name="Farm" type="Button" parent="."]
+offset_left = 248.0
+offset_top = 148.0
+offset_right = 455.0
+offset_bottom = 217.0
+text = "click for +1"
+
+[node name="Increment" type="Button" parent="."]
+offset_left = 251.0
+offset_top = 332.0
+offset_right = 458.0
+offset_bottom = 401.0
+text = "upgrade +1"
+
+[node name="Bank" type="Label" parent="."]
+offset_left = 714.0
+offset_top = 140.0
+offset_right = 872.0
+offset_bottom = 207.0
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buy Increment" type="Label" parent="."]
+offset_left = 296.0
+offset_top = 263.0
+offset_right = 402.0
+offset_bottom = 314.0
+
+[connection signal="button_down" from="Farm" to="GameObject" method="_on_button_button_down"]
+[connection signal="button_down" from="Increment" to="GameObject" method="_on_button_2_button_down"]
