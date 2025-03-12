@@ -120,51 +120,51 @@ var gain_currency_pass := false
 var toggle_unlocked = false
 
 var buy_click_upgrade_info_array = [
-	['multiply', false, 1],
-	['hold_down', false, 1]
+	['multiply', false, 25000000],
+	['hold_down', false, 750000000000]
 ]
 
 var buy_click_progress_button_info_array = [
-	[1, false, 10],
-	[1, false, 100],
-	[1, false, 'second button'],
-	[1, false, 1000],
+	[50, false, 50],
+	[6850000, false, 500],
+	[574350000, false, 'second button'],
+	[4218440000, false, 5000],
 ]
 
 var buy_click_progress_bar_info_array = [
-	[1, false, 10, 10],
-	[1, false, 5, 20],
-	[1, false, 2.5, 40],
-	[1, false, 1, 100],
-	[1, false, 0.1, 1000],
+	[350, false, 10, 10],
+	[5000, false, 5, 20],
+	[450000, false, 2.5, 40],
+	[2845920000, false, 1, 100],
+	[989421670000, false, 0.1, 1000],
 ]
 
 var buy_click_progress_bar_multi_info_array = [
-	[1, false, 5],
-	[1, false, 10],
-	[1, false, 25]
+	[6850000, false, 5],
+	[574350000, false, 10],
+	[4218440000, false, 25]
 ]
 
 var buy_auto_progress_bar_info_array = [
-	[1, false, 0, 1],
-	[1, false, 0, 5],
-	[1, false, 0, 10],
-	[1, false, 0, 25],
-	[1, false, 0, 100]
+	[75000, false, 0, 1],
+	[1850000, false, 0, 5],
+	[95650000, false, 0, 10],
+	[89421670000, false, 0, 25],
+	[7512564830000, false, 0, 100]
 ]
 
 var buy_auto_progress_bar_speed_info_array = [
-	[1, false, 2],
-	[1, false, 4],
-	[1, false, 8],
-	[1, false, 16],
-	[1, false, 32],
+	[6850000, false, 2],
+	[574350000, false, 4],
+	[4218440000, false, 8],
+	[89421670000, false, 16],
+	[751256483000, false, 32],
 ]
 
 var buy_auto_progress_bar_multi_info_array = [
-	[1, false, 5],
-	[1, false, 10],
-	[1, false, 25],
+	[1850000, false, 5],
+	[421844000, false, 10],
+	[89421670000, false, 25],
 ]
 
 # vvv functions start here vvv
