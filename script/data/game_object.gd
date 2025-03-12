@@ -45,7 +45,9 @@ class_name Data_Management extends Node
 		
 		if(click <= value && bank_gain_label != null): bank_gain_label.text = "[wave amp=75 freq=12.5]gained " + value_to_print + " [/wave]"
 		
-		click = value
+		if(value == 999999999999999999): click = 999999999999999999
+		else: click = value
+		
 		if(bank_label != null): 
 			set_correct_notation_on_tag(value, bank_label)
 
@@ -57,14 +59,12 @@ class_name Data_Management extends Node
 @export var increment_upgrade_cost := 1:
 	set(value):
 		increment_upgrade_cost = value
-		if(increment_upgrade_cost > 100000): set_correct_notation_on_tag(value, increment_price_tag)
-		else: increment_price_tag.text = 'costs ' + str(value)
+		set_correct_notation_on_tag(value, increment_price_tag)
 
 @export var multiply_upgrade_cost := 7500:
 	set(value):
 		multiply_upgrade_cost = value
-		if(multiply_upgrade_cost > 100000): set_correct_notation_on_tag(value, multiply_price_tag)
-		else: multiply_price_tag.text = 'costs ' + str(multiply_upgrade_cost)
+		set_correct_notation_on_tag(value, multiply_price_tag)
 
 @export var progress_bar_1_value := 0:
 	set(value):
@@ -125,46 +125,47 @@ var buy_click_upgrade_info_array = [
 ]
 
 var buy_click_progress_button_info_array = [
-	[50, false, 50],
-	[6850000, false, 500],
+	[50, false, 500],
+	[6850000, false, 500000],
 	[574350000, false, 'second button'],
-	[4218440000, false, 5000],
+	[4218440000000000, false, 500000000000],
 ]
 
 var buy_click_progress_bar_info_array = [
-	[350, false, 10, 10],
-	[5000, false, 5, 20],
-	[450000, false, 2.5, 40],
-	[2845920000, false, 1, 100],
-	[989421670000, false, 0.1, 1000],
+	[350, false, 10, 100],
+	[75000, false, 5, 1000],
+	[1850000, false, 2.5, 10000],
+	[2845920000, false, 1, 100000],
+	[989421670000, false, 0.1, 1000000],
 ]
 
 var buy_click_progress_bar_multi_info_array = [
-	[6850000, false, 5],
-	[574350000, false, 10],
-	[4218440000, false, 25]
+	[685000, false, 100],
+	[574350000, false, 1000],
+	[42184400000, false, 10000]
 ]
 
+# gets the data from this array backwards
 var buy_auto_progress_bar_info_array = [
-	[75000, false, 0, 1],
-	[1850000, false, 0, 5],
-	[95650000, false, 0, 10],
-	[89421670000, false, 0, 25],
-	[7512564830000, false, 0, 100]
+	[7512564830000, false, 0, 1, 1000000],
+	[89421670000, false, 0, 5, 100000],
+	[95650000, false, 0, 10, 10000],
+	[250000, false, 0, 25, 1000],
+	[5000 , false, 0, 100, 100]
 ]
 
 var buy_auto_progress_bar_speed_info_array = [
 	[6850000, false, 2],
 	[574350000, false, 4],
-	[4218440000, false, 8],
-	[89421670000, false, 16],
-	[751256483000, false, 32],
+	[42184400000, false, 8],
+	[8942167000000, false, 16],
+	[751256483000000, false, 32],
 ]
 
 var buy_auto_progress_bar_multi_info_array = [
-	[1850000, false, 5],
-	[421844000, false, 10],
-	[89421670000, false, 25],
+	[185000, false, 100],
+	[421844000, false, 1000],
+	[89421670000, false, 10000],
 ]
 
 # vvv functions start here vvv
@@ -173,15 +174,15 @@ func set_correct_notation_on_tag(value, target) -> void:
 	if(value < 100000):
 		target.text = str(value)
 	elif(value < 10000000):
-		target.text = str(value).erase(str(value).length() - 3, 3) + 'K'
+		target.text = str(value).erase(str(value).length() - 3, 4) + 'K'
 	elif(value < 10000000000):
-		target.text = str(value).erase(str(value).length() - 7, 7) + 'M'
+		target.text = str(value).erase(str(value).length() - 6, 7) + 'M'
 	elif(value < 10000000000000):
-		target.text = str(value).erase(str(value).length() - 9, 9) + 'B'
+		target.text = str(value).erase(str(value).length() - 9, 10) + 'B'
 	elif(value < 10000000000000000):
-		target.text = str(value).erase(str(value).length() - 12, 12) + 'T'
+		target.text = str(value).erase(str(value).length() - 12, 13) + 'T'
 	else:
-		target.text = str(value).erase(str(value).length() - 15, 15) + 'Q'
+		target.text = str(value).erase(str(value).length() - 15, 16) + 'Q'
 
 func _on_win_button_down() -> void:
 	%WinButton.end_game()
@@ -217,7 +218,7 @@ func _on_buy_multiply_button_down() -> void:
 	if(click < multiply_upgrade_cost): return
 	
 	click -= multiply_upgrade_cost
-	multiply_upgrade_cost += int(floor(multiply_upgrade_cost * 1.5))
+	multiply_upgrade_cost += int(floor(multiply_upgrade_cost * 10))
 	click_value *= 2
 
 
@@ -246,7 +247,9 @@ func progress_bar_management(progress_bar, value, multi) -> void:
 	
 	if(progress_bar.visible):
 		if(value >= 100):
-			click += click_value * multi
+			click += click_value * multi * increment_progress_bar_multi
+			print(click_value * multi)
+			print(multi)
 			#bank_gain_label.text = "[wave amp=50 freq=15]gained " + str( (click_value * multi) + click_value ) + " [/wave]"
 
 
@@ -292,19 +295,19 @@ func auto_progress_bar_management(value, multi) -> void:
 		click += click_value * multi * auto_progress_bar_multi
 
 func _on_auto_progress_bar_value_changed(value: float) -> void:
-	auto_progress_bar_management(value, 10)
+	auto_progress_bar_management(value, buy_auto_progress_bar_info_array[4][4])
 
 func _on_auto_progress_bar_2_value_changed(value: float) -> void:
-	auto_progress_bar_management(value, 100)
+	auto_progress_bar_management(value, buy_auto_progress_bar_info_array[3][4])
 
 func _on_auto_progress_bar_3_value_changed(value: float) -> void:
-	auto_progress_bar_management(value, 1000)
+	auto_progress_bar_management(value, buy_auto_progress_bar_info_array[2][4])
 
 func _on_auto_progress_bar_4_value_changed(value: float) -> void:
-	auto_progress_bar_management(value, 10000)
+	auto_progress_bar_management(value, buy_auto_progress_bar_info_array[1][4])
 
 func _on_auto_progress_bar_5_value_changed(value: float) -> void:
-	auto_progress_bar_management(value, 100000)
+	auto_progress_bar_management(value, buy_auto_progress_bar_info_array[0][4])
 
 
 
@@ -322,7 +325,8 @@ func _on_click_upgrade_button_down() -> void:
 					buy_click_upgrade_info_array[i][1] = true
 					click_multiply_container.visible = true
 					
-					click_upgrade_button_container.get_children()[0].text = 'costs ' + str(buy_click_upgrade_info_array[1][2])
+					set_correct_notation_on_tag(buy_click_upgrade_info_array[1][2], click_upgrade_button_container.get_children()[0])
+					
 					click_upgrade_button_container.get_children()[1].text = 'buy hold down'
 					break
 				'hold_down':
@@ -352,7 +356,7 @@ func _on_click_progress_button_down() -> void:
 				click_progress_button_container.get_children()[1].text = 'bought everything'
 				click_progress_button_container.get_children()[1].disabled = true
 			else: 
-				click_progress_button_container.get_children()[0].text = 'costs ' + str(buy_click_progress_button_info_array[i + 1][0])
+				set_correct_notation_on_tag(buy_click_progress_button_info_array[i + 1][0], click_progress_button_container.get_children()[0])
 				if(typeof(buy_click_progress_button_info_array[i + 1][2]) == 2):
 					click_progress_button_container.get_children()[1].text = 'upgrade *' + str(buy_click_progress_button_info_array[i + 1][2])
 				else:
@@ -371,19 +375,20 @@ func _on_buy_click_progress_bar_button_down() -> void:
 			click -= buy_click_progress_bar_info_array[i][0]
 			buy_click_progress_bar_info_array[i][1] = true
 			progress_bar_container.get_children()[auto_progress_bar_container.get_children().size() - i - 1].visible = true
+			$"../GameContainer/LeftContainer/ShopContainer/ClickProgressBarMultiButtonContainer".visible = true
 			
 			if(i + 1 >= progress_bar_container.get_children().size()): 
 				buy_click_progress_bar_button_container.get_children()[0].text = ''
 				buy_click_progress_bar_button_container.get_children()[1].text = 'bought everything'
 				buy_click_progress_bar_button_container.get_children()[1].disabled = true
-			else: buy_click_progress_bar_button_container.get_children()[0].text = 'costs ' + str(buy_click_progress_bar_info_array[i + 1][0])
-		
+			else: 		set_correct_notation_on_tag(buy_click_progress_bar_info_array[i + 1][0], buy_click_progress_bar_button_container.get_children()[0])
+			
 			break
 
 # buy incremental bar multi on click
 func _on_buy_click_progress_bar_multi_button_down() -> void:
 	for i in buy_click_progress_bar_multi_info_array.size():
-		if(click < buy_click_progress_bar_multi_info_array[i][0]): break
+		if(click < buy_click_progress_bar_multi_info_array[i][0] or buy_click_progress_bar_multi_info_array[i][1] == true): continue
 		
 		click -= buy_click_progress_bar_multi_info_array[i][0]
 		increment_progress_bar_multi = buy_click_progress_bar_multi_info_array[i][2]
@@ -395,8 +400,9 @@ func _on_buy_click_progress_bar_multi_button_down() -> void:
 			click_progress_bar_multi_button_container.get_children()[0].text = ''
 			continue
 		
+		set_correct_notation_on_tag(buy_click_progress_bar_multi_info_array[i + 1][0], click_progress_bar_multi_button_container.get_children()[0])
 		click_progress_bar_multi_button_container.get_children()[1].text = 'increment bar *' + str(buy_click_progress_bar_multi_info_array[i + 1][2])
-		click_progress_bar_multi_button_container.get_children()[0].text = 'costs ' + str(buy_click_progress_bar_multi_info_array[i][0])
+		
 		buy_click_progress_bar_multi_info_array[i][1] = true
 		click_progress_bar_multi_button_container.get_children()[1].disabled = false
 		
@@ -406,28 +412,29 @@ func _on_buy_click_progress_bar_multi_button_down() -> void:
 func _on_buy_auto_progress_bar_button_down() -> void:
 	for i in auto_progress_bar_container.get_children().size():
 		var target = auto_progress_bar_container.get_children().size() - i - 1
-		print(buy_auto_progress_bar_info_array[target])
-		if(buy_auto_progress_bar_info_array[target][1] == false):
-			if(click < buy_auto_progress_bar_info_array[target][0]): return
-			
-			click -= buy_auto_progress_bar_info_array[target][0]
-			buy_auto_progress_bar_info_array[target][1] = true
-			auto_progress_bar_container.get_children()[target].visible = true
-			
-			if(i + 1 >= auto_progress_bar_container.get_children().size()): 
-				auto_progress_bar_button_container.get_children()[0].text = ''
-				auto_progress_bar_button_container.get_children()[1].text = 'bought everything'
-				auto_progress_bar_button_container.get_children()[1].disabled = true
-			else: auto_progress_bar_button_container.get_children()[0].text = 'costs ' + str(buy_auto_progress_bar_info_array[i + 1][0])
-			
-			break
+		print(click < buy_auto_progress_bar_info_array[target][0])
+		if(click < buy_auto_progress_bar_info_array[target][0] or buy_auto_progress_bar_info_array[target][1] == true): continue
+		
+		click -= buy_auto_progress_bar_info_array[target][0]
+		buy_auto_progress_bar_info_array[target][1] = true
+		auto_progress_bar_container.get_children()[target].visible = true
+		
+		$"../GameContainer/LeftContainer/ShopContainer/AutoProgressBarSpeedButtonContainer".visible = true
+		$"../GameContainer/LeftContainer/ShopContainer/AutoProgressBarMultiButtonContainer".visible = true
+		
+		if(i + 1 >= auto_progress_bar_container.get_children().size()): 
+			auto_progress_bar_button_container.get_children()[0].text = ''
+			auto_progress_bar_button_container.get_children()[1].text = 'bought everything'
+			auto_progress_bar_button_container.get_children()[1].disabled = true
+		else: set_correct_notation_on_tag(buy_auto_progress_bar_info_array[target - 1][0], auto_progress_bar_button_container.get_children()[0])
+		
+		break
 
 # buy auto progess speed button
 func _on_buy_auto_progress_bar_speed_button_down() -> void:
 	for i in buy_auto_progress_bar_speed_info_array.size():
-		if(click < buy_auto_progress_bar_speed_info_array[i][0]): break
+		if(click < buy_auto_progress_bar_speed_info_array[i][0] or buy_auto_progress_bar_speed_info_array[i][1] == true): continue
 		
-		click -= buy_auto_progress_bar_speed_info_array[i][0]
 		auto_progress_bar_speed = buy_auto_progress_bar_speed_info_array[i][2]
 		
 		print(buy_auto_progress_bar_speed_info_array[i])
@@ -437,8 +444,9 @@ func _on_buy_auto_progress_bar_speed_button_down() -> void:
 			auto_progress_bar_speed_button_container.get_children()[0].text = ''
 			continue
 		
+		set_correct_notation_on_tag(buy_auto_progress_bar_speed_info_array[i + 1][0], auto_progress_bar_speed_button_container.get_children()[0])
 		auto_progress_bar_speed_button_container.get_children()[1].text = 'auto speed *' + str(buy_auto_progress_bar_speed_info_array[i + 1][2])
-		auto_progress_bar_speed_button_container.get_children()[0].text = 'costs ' + str(buy_auto_progress_bar_speed_info_array[i][0])
+		
 		buy_auto_progress_bar_speed_info_array[i][1] = true
 		auto_progress_bar_speed_button_container.get_children()[1].disabled = false
 		
@@ -447,20 +455,21 @@ func _on_buy_auto_progress_bar_speed_button_down() -> void:
 # buy auto progress multi button -- buy_auto_progress_bar_multi_info_array
 func _on_buy_auto_progress_bar_multi_button_down() -> void:
 	for i in buy_auto_progress_bar_multi_info_array.size():
-		if(click < buy_auto_progress_bar_multi_info_array[i][0]): break
+		if(click < buy_auto_progress_bar_multi_info_array[i][0] or buy_auto_progress_bar_multi_info_array[i][1] == true): continue
+		print(buy_auto_progress_bar_multi_info_array[i][0])
 		
 		click -= buy_auto_progress_bar_multi_info_array[i][0]
 		auto_progress_bar_multi = buy_auto_progress_bar_multi_info_array[i][2]
 		
 		print(buy_auto_progress_bar_multi_info_array[i])
-		if(buy_auto_progress_bar_multi_info_array[i][1] == true or i + 1 >= buy_auto_progress_bar_multi_info_array.size()): 
+		if(i + 1 >= buy_auto_progress_bar_multi_info_array.size()): 
 			auto_progress_bar_multi_button_container.get_children()[1].text = 'bought everything'
 			auto_progress_bar_multi_button_container.get_children()[1].disabled = true
 			auto_progress_bar_multi_button_container.get_children()[0].text = ''
 			continue
 		
+		set_correct_notation_on_tag(buy_auto_progress_bar_multi_info_array[i + 1][0], auto_progress_bar_multi_button_container.get_children()[0])
 		auto_progress_bar_multi_button_container.get_children()[1].text = 'auto multi *' + str(buy_auto_progress_bar_multi_info_array[i + 1][2])
-		auto_progress_bar_multi_button_container.get_children()[0].text = 'costs ' + str(buy_auto_progress_bar_multi_info_array[i][0])
 		buy_auto_progress_bar_multi_info_array[i][1] = true
 		auto_progress_bar_multi_button_container.get_children()[1].disabled = false
 		
@@ -473,13 +482,19 @@ func _ready() -> void:
 	bank_label.text = str(click)
 	#farm_button.text = 'click for +' + str(click_value)
 	
-	increment_price_tag.text = 'costs ' + str(increment_upgrade_cost)
-	multiply_price_tag.text = 'costs ' + str(multiply_upgrade_cost)
+	set_correct_notation_on_tag(increment_upgrade_cost, increment_price_tag)
+	set_correct_notation_on_tag(multiply_upgrade_cost, multiply_price_tag)
 	
-	buy_click_progress_bar_button_container.get_children()[0].text = 'costs ' + str(buy_click_progress_bar_info_array[0][0])
-	click_upgrade_button_container.get_children()[0].text = 'costs ' + str(buy_click_upgrade_info_array[0][2])
+	set_correct_notation_on_tag(buy_click_upgrade_info_array[0][2], click_upgrade_button_container.get_children()[0])
 	
-	click_progress_button_container.get_children()[0].text = 'costs ' + str(buy_click_progress_button_info_array[0][0])
+	set_correct_notation_on_tag(buy_click_progress_button_info_array[0][0], click_progress_button_container.get_children()[0])
+	
+	set_correct_notation_on_tag(buy_click_progress_bar_info_array[0][0], buy_click_progress_bar_button_container.get_children()[0])
+	set_correct_notation_on_tag(buy_click_progress_bar_multi_info_array[0][0], click_progress_bar_multi_button_container.get_children()[0])
+	
+	set_correct_notation_on_tag(buy_auto_progress_bar_info_array[4][0], auto_progress_bar_button_container.get_children()[0])
+	set_correct_notation_on_tag(buy_auto_progress_bar_speed_info_array[0][0], auto_progress_bar_speed_button_container.get_children()[0])
+	set_correct_notation_on_tag(buy_auto_progress_bar_multi_info_array[0][0], auto_progress_bar_multi_button_container.get_children()[0])
 	
 	#for i in progress_bar_container.get_children().size():
 		#if(buy_click_progress_bar_info_array[i][1]): 
